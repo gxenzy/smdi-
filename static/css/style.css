@@ -1,0 +1,133 @@
+/* General Styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif; /* Use a clean font */
+    background-color: #f8f9fa; /* Light background color */
+    color: #333; /* Dark text color for readability */
+    height: 100vh; /* Full viewport height */
+}
+
+.container {
+    max-width: 1200px; /* Limit the maximum width */
+    margin: auto; /* Center the container */
+    padding: 20px; /* Add padding */
+}
+
+/* Sidebar Styles */
+.sidebar {
+    background-color: #343a40; /* Dark background for sidebar */
+    color: white; /* White text */
+    transition: transform 0.3s ease; /* Smooth transition */
+    width: 250px; /* Fixed width */
+    height: 100vh; /* Full height */
+    position: fixed; /* Fixed position */
+    top: 0; /* Align to top */
+    left: 0; /* Align to left */
+    z-index: 1000; /* Ensure it stays on top */
+}
+
+.sidebar-header {
+    padding: 20px; /* Padding for header */
+    background: #495057; /* Slightly lighter background */
+    font-size: 1.5em; /* Larger font size */
+}
+
+.sidebar-menu {
+    list-style: none; /* Remove default list styling */
+    padding: 0; /* Remove padding */
+}
+
+.sidebar-menu li {
+    padding: 15px 20px; /* Padding for menu items */
+}
+
+.sidebar-menu li a {
+    color: white; /* White text for links */
+    text-decoration: none; /* Remove underline */
+    display: block; /* Make the whole area clickable */
+}
+
+.sidebar-menu li a:hover {
+    background: #495057; /* Change background on hover */
+}
+
+/* Main Content Styles */
+.main-content {
+    margin-left: 250px; /* Space for the sidebar */
+    padding: 20px; /* Padding for main content */
+    transition: margin-left 0.3s ease, filter 0.3s ease; /* Smooth transition */
+}
+
+h1, h2, h3 {
+    margin-top: 0; /* Remove top margin for headings */
+}
+
+/* Button Styles */
+.btn-primary {
+    background-color: #007bff; /* Bootstrap primary color */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners */
+    color: white; /* White text */
+    padding: 10px 15px; /* Padding for buttons */
+    cursor: pointer; /* Pointer cursor */
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+.btn-primary:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+
+/* Form Styles */
+.form-control {
+    width: 100%; /* Full width */
+    padding: 10px; /* Padding */
+    border: 1px solid #ddd; /* Light border */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 1rem; /* Font size */
+}
+
+.form-control:focus {
+    border-color: #007bff; /* Change border color on focus */
+    outline: none; /* Remove outline */
+}
+
+/* Alert Styles */
+.alert {
+    padding: 15px; /* Padding for alerts */
+    border-radius: 5px; /* Rounded corners */
+    margin-bottom: 20px; /* Space below alerts */
+    text-align: center; /* Center text */
+}
+
+.alert-error {
+    background-color: #f8d7da; /* Light red background */
+    border-color: #f5c6cb; /* Border color */
+    color: #721c24; /* Dark red text */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .sidebar {
+        position: absolute; /* Change position for mobile */
+        transform: translateX(-100%); /* Hide sidebar */
+    }
+    .main-content {
+        margin-left: 0; /* Remove margin for mobile */
+    }
+    .sidebar.collapsed {
+        transform: translateX(0); /* Show sidebar when toggled */
+    }
+    .avatar-container {
+        border: 2px solid #007bff; /* Change color as needed */
+        border-radius: 50%; /* Makes the image circular */
+        overflow: hidden; /* Ensures the image fits within the border */
+        width: 100px; /* Set width as needed */
+        height: 100px; /* Set height as needed */
+    }
+    
+    .avatar-img {
+        width: 100%; /* Ensures the image fills the container */
+        height: auto; /* Maintains aspect ratio */
+    }
+}

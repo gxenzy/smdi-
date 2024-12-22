@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% block title %}User  Profile{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="profile-header mb-4 d-flex align-items-center">
+        <div class="profile-avatar me-4">
+          <div class="avatar-container">
+            {% if current_user.avatar_url %}
+            <img src="{{ url_for('static', filename='avatars/' + current_user.avatar_url) }}" alt="Profile Avatar" class="avatar-img">
+            {% else %}
+            <img src="{{ url_for('static', filename='avatars/default.png') }}" alt="Profile Avatar" class="avatar-img">
+            {% endif %}
+          </div>
+          <form id="avatar-form" method="POST" enctype="multipart/form-data" class="d-none">
+            < input type="file" id="avatar-upload" name="avatar" accept="image/*" aria-label="Upload Avatar" onchange="this.form.submit()">
+          </form>
+          <button class="btn btn-sm btn-primary change-avatar-btn" aria-label="Change Avatar" onclick="document.getElementById('avatar-upload').click();">Change Avatar</button>
+        </div>
+        <div class="profile-info">
+          <h2>{{ current_user.first_name }} {{ current_user.last_name }}</h2>
+          <p class="text-muted">{{ current_user.role }}</p>
+          <div class="mb-3">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" name="email" value="{{ current_user.email }}" readonly>
+          </div>
+        </div>
+      </div>
+      <!-- Profile Navigation Tabs -->
+      <ul class="nav nav-tabs mb-4" id="profileTab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <a class="nav-link active" id="about-tab" data-bs-toggle="tab" href="#about" role="tab" aria-controls="about" aria-selected="true">About</a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" id="friends-tab" data-bs-toggle="tab" href="#friends" role="tab" aria-controls="friends" aria-selected="false">Friends</a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" id="photos-tab" data-bs-toggle="tab" href="#photos" role="tab" aria-controls="photos" aria-selected="false">Photos</a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" id="activity-tab" data-bs-toggle="tab" href="#activity" role="tab" aria-controls="activity" aria-selected="false">Activity Log</a>
+        </li>
+      </ul>
+      <div class="tab-content" id="profileTabContent">
+        <!-- About Section -->
+        <div class="tab-pane fade show active" id="about" role="tabpanel" aria-labelledby="about-tab">
+          <div class="card mb-4">
+            <div class="card-body">
+              <h5 class="card-title">Profile Details</h5>
+              <form id="profile-form" method="POST" class="profile-form">
+                {{ form.hidden_tag() }}  <!-- CSRF token -->
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="first_name">First Name</label>
+                    {{ form.first_name(class="form-control", required=True, value=current_user.first_name) }}
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="last_name">Last Name</label>
+                    {{ form.last_name(class="form-control", required=True, value=current_user.last_name) }}
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="phone">Phone</label>
+                  {{ form.phone(class="form-control", value=current_user.phone) }}
+                </div>
+                <div class="mb-3">
+                  <label for="bio">Bio</label>
+                  {{ form.bio(class="form-control", rows=3, value=current_user.bio) }}
+                </div>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!-- Friends Section -->
+        <div class="tab-pane fade" id="friends" role="tabpanel" aria-labelledby="friends-tab">
+          <div class="card mb-4">
+            <div class="card-body">
+              <h5 class="card-title">Friends List</h5>
+              <ul class="list-group">
+                {% for friend in current_user.friends %}
+                <li class="list-group-item">
+                  {{ friend.first_name }} {{ friend.last_name }}
+                </li>
+                {% else %}
+                <li class="list-group-item">No friends found.</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- Photos Section -->
+        <div class="tab-pane fade" id="photos" role="tabpanel" aria-labelledby="photos-tab">
+          <div class="card mb-4">
+            <div class="card-body">
+              <h5 class="card-title">Photos</h5>
+              <div class="row">
+                {% for photo in current_user.photos %}
+                <div class=" col-md-4 mb-3">
+                  <img src="{{ url_for('static', filename='photos/' + photo.filename) }}" alt="User  Photo" class="img-fluid">
+                </div>
+                {% else %}
+                <p>No photos available.</p>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Activity Log Section -->
+        <div class="tab-pane fade" id="activity" role="tabpanel" aria-labelledby="activity-tab">
+          <div class="card mb-4">
+            <div class="card-body">
+              <h5 class="card-title">Activity Log</h5>
+              <div class="activity-timeline">
+                {% if logs %}
+                {% for log in logs %}
+                <div class="activity-item">
+                  <div class="activity-content">
+                    <div class="activity-time">{{ log.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</div>
+                    <div class="activity-text">{{ log.action }}</div>
+                    <div class="activity-meta">IP: {{ log.ip_address }}</div>
+                  </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <div class="activity-item">
+                  <div class="activity-content">
+                    <div class="activity-text">No activity logs found.</div>
+                  </div>
+                </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

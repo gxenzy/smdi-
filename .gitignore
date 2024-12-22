@@ -1,0 +1,21 @@
+# Ignore environment variables file
+.env
+
+# Ignore Python compiled files
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore virtual environment directories
+venv/
+env/
+.venv/
+
+# Ignore logs
+*.log
+
+# Ignore SQLite databases
+*.sqlite3
+
+# Ignore other files or directories you want to exclude
+*.db

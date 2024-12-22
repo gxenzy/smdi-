@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Rendered HTML Output</h1>
+<div>
+    {{ html_code|safe }}
+</div>
+<a href="{{ url_for('index') }}">Go Back</a>
+{% endblock %}

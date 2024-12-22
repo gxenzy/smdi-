@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Migration Results</h1>
+<h2>Old HTML Code</h2>
+<div>
+    <pre>{{ old_html }}</pre>
+</div>
+<h2>New HTML Code</h2>
+<div>
+    <pre>{{ new_html }}</pre>
+</div>
+<a href="{{ url_for('index') }}">Go Back</a>
+{% endblock %}

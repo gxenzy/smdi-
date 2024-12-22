@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Login</title>
+</head>
+<body>
+    <h1>Admin Login</h1>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        {{ form.identifier.label }} {{ form.identifier(size=32) }}<br>
+        {{ form.password.label }} {{ form.password(size=32) }}<br>
+        {{ form.remember() }} {{ form.remember.label }}<br>
+        {{ form.submit() }}
+    </form>
+    <a href="{{ url_for('admin_forgot_password') }}">Forgot Password?</a>
+</body>
+</html>

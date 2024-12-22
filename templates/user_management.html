@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}User  Management{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>User Management</h2>
+    <div class="mb-4">
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUser Modal">
+            Add New User
+        </button>
+    </div>
+    
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Created At</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.role }}</td>
+                    <td>{{ user.created_at.strftime('%Y-%m-%d') if user.created_at else 'N/A' }}</td>
+                    <td>{{ 'Active' if user.is_active else 'Inactive' }}</td>
+                    <td>
+                        <button class="btn btn-sm btn-warning">Edit</button>
+                        <button class="btn btn-sm btn-danger">Delete</button>
+                        <form action="{{ url_for('make_admin', user_id=user.id) }}" method="POST" style="display:inline;">
+                            <button type="submit" class="btn btn-sm btn-success">Make Admin</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Add User Modal -->
+<div class="modal fade" id="addUser Modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add New User</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{{ url_for('add_user') }}">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" name="username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="role" class="form-label">Role</label>
+                        <select class="form-select" id="role" name="role" required>
+                            <option value="staff">Staff</option>
+                            <option value="moderator">Moderator</option>
+                            <option value="working">Working Member</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add User</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

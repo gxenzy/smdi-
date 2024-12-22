@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Settings</h2>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Preferences</h5>
+            <form method="POST" action="{{ url_for('settings') }}">
+                {{ form.hidden_tag() }}
+                <div class="form-group">
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="notificationToggle" name="enable_notifications">
+                        <label class="custom-control-label" for="notificationToggle">Enable Notifications</label>
+                    </div>
+                </div>
+                <div class="form-group mt-3">
+                    <label for="themeSelect">Theme Preference</label>
+                    <select class="form-control" id="themeSelect" name="theme">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Save Settings</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

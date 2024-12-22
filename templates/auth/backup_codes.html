@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h1>Backup Codes</h1>
+    <div class="alert alert-warning">
+        <strong>Important:</strong> Please save these backup codes in a secure location. 
+        Each code can only be used once. If you run out of codes, you can generate new ones.
+    </div>
+    
+    <div class="backup-codes">
+        {% for code in backup_codes %}
+            <div class="backup-code">{{ code }}</div>
+        {% endfor %}
+    </div>
+
+    <form method="POST" action="{{ url_for('generate_backup_codes') }}">
+        {{ form.csrf_token }}
+        <button type="submit" class="btn btn-primary mt-3">Generate New Codes</button>
+    </form>
+</div>
+{% endblock %}

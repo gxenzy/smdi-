@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card mt-5">
+                <div class="card-header">
+                    <h2>2FA Backup Codes</h2>
+                </div>
+                <div class="card-body">
+                    {% if backup_codes %}
+                        <div class="alert alert-warning">
+                            <strong>Important:</strong> Save these backup codes in a secure location. They will only be shown once!
+                        </div>
+                        <div class="backup-codes-container">
+                            {% for code in backup_codes %}
+                                <div class="backup-code">{{ code }}</div>
+                            {% endfor %}
+                        </div>
+                        <button class="btn btn-primary mt-3" onclick="window.print()">Print Codes</button>
+                    {% endif %}
+                    
+                    <form method="POST" class="mt-4">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <button type="submit" class="btn btn-warning">Generate New Backup Codes</button>
+                    </form>
+                    
+                    {% if existing_codes %}
+                        <h3 class="mt-4">Existing Backup Codes</h3>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Status</th>
+                                    <th>Used At</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for code in existing_codes %}
+                                    <tr>
+                                        <td>{{ code.code if code.used else '••••••' }}</td>
+                                        <td>{{ 'Used' if code.used else 'Available' }}</td>
+                                        <td>{{ code.used_at.strftime('%Y-%m-%d %H:%M:%S') if code.used_at else '-' }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,12 @@
+.avatar-container {
+    border: 2px solid #007bff; /* Change color as needed */
+    border-radius: 50%; /* Makes the image circular */
+    overflow: hidden; /* Ensures the image fits within the border */
+    width: 100px; /* Set width as needed */
+    height: 100px; /* Set height as needed */
+}
+
+.avatar-img {
+    width: 100%; /* Ensures the image fills the container */
+    height: auto; /* Maintains aspect ratio */
+}
